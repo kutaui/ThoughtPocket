@@ -1,0 +1,7 @@
+.form-message {
+    @apply text-red-600
+}
+
+.form-title {
+    @apply text-xl font-bold
+}

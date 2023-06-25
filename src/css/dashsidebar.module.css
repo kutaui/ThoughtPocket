@@ -1,0 +1,36 @@
+.sidebar {
+    @apply w-[55%] xs:hidden md:hidden min-w-[35%]
+}
+
+.sidebar-container {
+    @apply fixed left-0 top-0 w-[25%] h-screen border lg:w-[35%] overflow-auto
+}
+
+.sidebar-header {
+    @apply ml-10 mt-10 flex items-center justify-between w-[80%]
+}
+
+.sidebar-header h2 {
+    @apply font-bold text-4xl
+}
+
+.sidebar-notes {
+    @apply mt-10
+}
+
+.sidebar-note {
+    @apply hover:bg-gray-300 h-24 mt-2
+}
+
+.active {
+    @apply bg-black text-white
+}
+
+
+.sidebar-note-title {
+    @apply flex justify-between w-[80%] ml-10 pt-2
+}
+
+.sidebar-note-title h3 {
+    @apply font-bold text-xl truncate
+}

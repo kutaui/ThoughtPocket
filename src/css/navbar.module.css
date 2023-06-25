@@ -1,0 +1,27 @@
+.navbar-container {
+    @apply flex items-center  justify-around w-[100%] h-16 relative
+}
+
+.logo {
+    @apply w-8 h-8 mr-2
+}
+
+.logo-title {
+    @apply text-xl font-bold xs:w-[40%]
+}
+
+.logo-container {
+    @apply flex  items-center mt-2
+}
+
+.middle-nav-container {
+    @apply xs:hidden md:w-[28%] w-[20%]
+}
+
+.middle-nav-container ul {
+    @apply flex justify-between items-center mt-2 font-semibold text-xl md:text-lg
+}
+
+
+.account-container {
+    @apply xs:hidden flex justify-between items-center w-[10%] min-w-[150px] }

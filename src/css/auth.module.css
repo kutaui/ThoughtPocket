@@ -1,0 +1,10 @@
+.tabs-container {
+    @apply w-[75%] mx-auto mt-20 max-w-[500px] xs:mt-10
+}
+.tabs-list {
+    @apply flex justify-center border-b-2 border-black pb-1
+}
+
+.tabs-title {
+    @apply text-lg hover:scale-110 hover:bg-black hover:text-white data-[state=active]:bg-black data-[state=active]:text-white
+}

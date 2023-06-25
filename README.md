@@ -11,6 +11,8 @@
 # Introduction
 This is my first _"real"_ fullstack app where I don't use Next.js's api routes. It is fully responsive and functional, but there are still some tweaks that can be made to make it better.
 
+[Backend](https://github.com/kutaui/ThoughtPocket-Backend)
+
 ## Tech Stack
 
 - Next.js

@@ -2,7 +2,7 @@ import React from "react";
 import "@/css/globals.css"
 import {Providers} from "@/redux/provider";
 import {Toaster} from "react-hot-toast";
-
+import { Analytics } from '@vercel/analytics/react';
 export const metadata = {
     title: 'Thought Pocket',
     description: 'Your notes, your thoughts, your pocket.',
@@ -43,6 +43,7 @@ export default function RootLayout({
         <Providers>
             {children}
         </Providers>
+        <Analytics />
         </body>
         </html>
 

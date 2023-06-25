@@ -63,7 +63,7 @@ const MenuBar = ({editor}:any) => {
                         .toggleCode()
                         .run()
                 }
-                className={editor.isActive('code') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('code') ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 code
             </Button>
@@ -75,67 +75,67 @@ const MenuBar = ({editor}:any) => {
             </Button>
             <Button
                 onClick={() => editor.chain().focus().setParagraph().run()}
-                className={editor.isActive('paragraph') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('paragraph') ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 paragraph
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
-                className={editor.isActive('heading', {level: 1}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('heading', {level: 1}) ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 h1
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
-                className={editor.isActive('heading', {level: 2}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('heading', {level: 2}) ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 h2
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 3}).run()}
-                className={editor.isActive('heading', {level: 3}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('heading', {level: 3}) ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 h3
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 4}).run()}
-                className={editor.isActive('heading', {level: 4}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('heading', {level: 4}) ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 h4
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 5}).run()}
-                className={editor.isActive('heading', {level: 5}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('heading', {level: 5}) ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 h5
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 6}).run()}
-                className={editor.isActive('heading', {level: 6}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('heading', {level: 6}) ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 h6
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={editor.isActive('bulletList') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('bulletList') ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 bullet list
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={editor.isActive('orderedList') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('orderedList') ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 ordered list
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                className={editor.isActive('codeBlock') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('codeBlock') ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 code block
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                className={editor.isActive('blockquote') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
+                className={editor.isActive('blockquote') ? 'bg-black text-white dark:bg-white dark:text-black' : ''}
             >
                 blockquote
             </Button>
@@ -169,12 +169,7 @@ const MenuBar = ({editor}:any) => {
             >
                 redo
             </Button>
-            <Button
-                onClick={() => editor.chain().focus().setColor('#958DF1').run()}
-                className={editor.isActive('textStyle', {color: '#958DF1'}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
-            >
-                purple
-            </Button>
+
         </>
     )
 }

@@ -51,7 +51,7 @@ export default function NoteEditor({activeNote, fetchNotes, setActiveNote}: any)
         typingTimeoutRef.current = setTimeout(async () => {
             setSavingState(SavingState.SAVING);
             await updateNote(title, body); // Pass the updated values to the updateNote function
-        }, 1000);
+        }, 3000);
     };
 
     const updateNote = async (title: string, body: string) => {

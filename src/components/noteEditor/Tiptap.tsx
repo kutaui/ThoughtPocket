@@ -24,7 +24,7 @@ const MenuBar = ({editor}:any) => {
                         .toggleBold()
                         .run()
                 }
-                className={editor.isActive('bold') ? 'bg-black text-white' : ''}
+                className={editor.isActive('bold') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 bold
             </Button>
@@ -37,7 +37,7 @@ const MenuBar = ({editor}:any) => {
                         .toggleItalic()
                         .run()
                 }
-                className={editor.isActive('italic') ? 'is-active' : ''}
+                className={editor.isActive('italic') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 italic
             </Button>
@@ -50,7 +50,7 @@ const MenuBar = ({editor}:any) => {
                         .toggleStrike()
                         .run()
                 }
-                className={editor.isActive('strike') ? 'is-active' : ''}
+                className={editor.isActive('strike') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 strike
             </Button>
@@ -63,7 +63,7 @@ const MenuBar = ({editor}:any) => {
                         .toggleCode()
                         .run()
                 }
-                className={editor.isActive('code') ? 'is-active' : ''}
+                className={editor.isActive('code') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 code
             </Button>
@@ -75,67 +75,67 @@ const MenuBar = ({editor}:any) => {
             </Button>
             <Button
                 onClick={() => editor.chain().focus().setParagraph().run()}
-                className={editor.isActive('paragraph') ? 'is-active' : ''}
+                className={editor.isActive('paragraph') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 paragraph
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
-                className={editor.isActive('heading', {level: 1}) ? 'is-active' : ''}
+                className={editor.isActive('heading', {level: 1}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 h1
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
-                className={editor.isActive('heading', {level: 2}) ? 'is-active' : ''}
+                className={editor.isActive('heading', {level: 2}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 h2
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 3}).run()}
-                className={editor.isActive('heading', {level: 3}) ? 'is-active' : ''}
+                className={editor.isActive('heading', {level: 3}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 h3
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 4}).run()}
-                className={editor.isActive('heading', {level: 4}) ? 'is-active' : ''}
+                className={editor.isActive('heading', {level: 4}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 h4
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 5}).run()}
-                className={editor.isActive('heading', {level: 5}) ? 'is-active' : ''}
+                className={editor.isActive('heading', {level: 5}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 h5
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleHeading({level: 6}).run()}
-                className={editor.isActive('heading', {level: 6}) ? 'is-active' : ''}
+                className={editor.isActive('heading', {level: 6}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 h6
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={editor.isActive('bulletList') ? 'is-active' : ''}
+                className={editor.isActive('bulletList') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 bullet list
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={editor.isActive('orderedList') ? 'is-active' : ''}
+                className={editor.isActive('orderedList') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 ordered list
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                className={editor.isActive('codeBlock') ? 'is-active' : ''}
+                className={editor.isActive('codeBlock') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 code block
             </Button>
             <Button
                 onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                className={editor.isActive('blockquote') ? 'is-active' : ''}
+                className={editor.isActive('blockquote') ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 blockquote
             </Button>
@@ -171,7 +171,7 @@ const MenuBar = ({editor}:any) => {
             </Button>
             <Button
                 onClick={() => editor.chain().focus().setColor('#958DF1').run()}
-                className={editor.isActive('textStyle', {color: '#958DF1'}) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', {color: '#958DF1'}) ? 'bg-black text-white dark:bg-white dark:text-white' : ''}
             >
                 purple
             </Button>

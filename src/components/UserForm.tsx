@@ -90,7 +90,7 @@ export function UserForm(props: { buttonText: string }) {
     }
 
 
-    if (loading) return <div className="absolute top-0 left-0 w-[100vw] bg-white z-10 h-[100vh]"/>
+    if (loading) return <div className="absolute top-0 left-0 w-[100vw] dark:bg-black bg-white z-10 h-[100vh]"/>
     return <>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

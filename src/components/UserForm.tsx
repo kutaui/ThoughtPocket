@@ -74,7 +74,7 @@ export function UserForm(props: { buttonText: string }) {
                 push("/dashboard");
                 toast.success("Register successful");
             } catch (err: any) {
-                toast.error(err.data.message);
+                toast.error("User already exists");
             }
         } else if (props.buttonText === "Login") {
             try {
@@ -84,7 +84,7 @@ export function UserForm(props: { buttonText: string }) {
                 push("/dashboard");
                 toast.success("Logged in successfully");
             } catch (err: any) {
-                toast.error(err.message);
+                toast.error("Invalid credentials");
             }
         }
     }
@@ -122,7 +122,8 @@ export function UserForm(props: { buttonText: string }) {
                 />
                 <div className=" mx-auto w-20">
 
-                    <Button disabled={isLoginLoading || isRegisterLoading} className="dark:hover:bg-black dark:bg-white dark:text-black dark:hover:text-white hover:bg-black hover:text-white "
+                    <Button disabled={isLoginLoading || isRegisterLoading}
+                            className="dark:hover:bg-black dark:bg-white dark:text-black dark:hover:text-white hover:bg-black hover:text-white "
                             type="submit">{props.buttonText}</Button>
                 </div>
             </form>

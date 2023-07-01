@@ -45,7 +45,6 @@ export default function Navbar() {
         return null;
     }
 
-    console.log(userInfo)
 
     return <>
         <div>

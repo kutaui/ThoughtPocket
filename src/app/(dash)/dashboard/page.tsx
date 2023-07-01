@@ -18,16 +18,18 @@ export interface Note {
     user: string;
     __v: number;
 }
+
 interface Notes {
     notes: Note[];
     length?: number;
 }
+
 export default function Dashboard() {
     const dispatch = useDispatch();
     const {push} = useRouter();
     const {userInfo} = useSelector((state: any) => state.auth);
     const [loading, setLoading] = useState(true)
-    const [notes, setNotes] = useState<Notes>({ notes: [] })
+    const [notes, setNotes] = useState<Notes>({notes: []})
     const [activeNote, setActiveNote] = useState(null);
     const [getNotes, {isLoading: isGetNotesLoading, error: getNotesError}] = useGetNotesMutation();
     const [updateNote, {isLoading: isUpdateNoteLoading, error: updateNoteError}] = useUpdateNoteMutation();
@@ -60,7 +62,6 @@ export default function Dashboard() {
             }
             const data = await response.json();
             setNotes(data);
-            console.log(data); // Use the updated value of `notes` here
             if (activeNote && data.notes && data.notes.length > 0) {
                 const updatedActiveNote = data.notes.find((note: Note) => note._id === activeNote);
                 if (updatedActiveNote) {
@@ -126,7 +127,7 @@ export default function Dashboard() {
         return notes.notes.find((note: any) => note && note._id === activeNote);
     };
 
-    useEffect(()  => {
+    useEffect(() => {
         fetchNotes();
     }, []);
 

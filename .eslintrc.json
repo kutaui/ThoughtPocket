@@ -27,7 +27,9 @@
     "object-shorthand": "off",
     "class-methods-use-this": "off",
     "node/no-missing-import": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "node/no-unsupported-features/es-syntax": "off",
+    "react/jsx-props-no-spreading": "off"
   },
   "parserOptions": {
     "project": "./tsconfig.json"

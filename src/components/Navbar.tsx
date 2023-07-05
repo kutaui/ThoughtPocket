@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLogoutMutation } from '@/redux/slices/usersApiSlice';
 import { logout } from '@/redux/slices/authSlice';
 import { useTheme } from 'next-themes';
-
+import { RootState } from '@/redux/store';
 import styles from '@/css/navbar.module.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -20,12 +20,13 @@ import { Switch } from '@/components/ui/switch';
 import toast from 'react-hot-toast';
 
 export default function Navbar() {
-  const { userInfo } = useSelector((state: any) => state.auth);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   const [logoutApiCall] = useLogoutMutation();
   const [isMounted, setIsMounted] = useState(false);
   const dispatch = useDispatch();
   const { theme, setTheme } = useTheme();
   const logo = theme === 'dark' ? '/logo-dark.png' : '/logo-light.png';
+
   const logoutHandler = async () => {
     try {
       await logoutApiCall({}).unwrap();
@@ -34,6 +35,7 @@ export default function Navbar() {
       toast.error('Something went wrong');
     }
   };
+
   useEffect(() => {
     // Delay the rendering until the component is mounted on the client-side
     setIsMounted(true);

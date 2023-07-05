@@ -24,6 +24,10 @@ import { setCredentials } from '@/redux/slices/authSlice';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+// this doesnt seem optimal, fix this
+
+type ButtonTextType = 'Login' | 'Register';
+
 const formSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email.',
@@ -33,7 +37,7 @@ const formSchema = z.object({
   }),
 });
 
-function UserForm(buttonText: string) {
+function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();

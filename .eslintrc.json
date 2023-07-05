@@ -29,7 +29,8 @@
     "node/no-missing-import": "off",
     "react/react-in-jsx-scope": "off",
     "node/no-unsupported-features/es-syntax": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "no-underscore-dangle": "off"
   },
   "parserOptions": {
     "project": "./tsconfig.json"

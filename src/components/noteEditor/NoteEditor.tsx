@@ -33,30 +33,6 @@ export default function NoteEditor({
     };
   }, [activeNote]);
 
-  const handleTitle = (event: any) => {
-    const { value } = event.target;
-    setUpdatedTitle(value);
-    scheduleSave(value, pendingBodyRef.current || updatedBody);
-    pendingTitleRef.current = value;
-  };
-
-  const handleBody = (value: any) => {
-    setUpdatedBody(value);
-    scheduleSave(pendingTitleRef.current || updatedTitle, value);
-    pendingBodyRef.current = value;
-  };
-
-  const scheduleSave = (title: string, body: string) => {
-    clearTimeout(typingTimeoutRef.current);
-    setSavingState(SavingState.NOT_SAVED);
-
-    // Set a timeout of 1 second after the user stops typing
-    typingTimeoutRef.current = setTimeout(async () => {
-      setSavingState(SavingState.SAVING);
-      await updateNote(title, body); // Pass the updated values to the updateNote function
-    }, 3000);
-  };
-
   const updateNote = async (title: string, body: string) => {
     try {
       const updatedNote = {
@@ -86,6 +62,30 @@ export default function NoteEditor({
     } catch (error) {
       // Handle the error
     }
+  };
+
+  const scheduleSave = (title: string, body: string) => {
+    clearTimeout(typingTimeoutRef.current);
+    setSavingState(SavingState.NOT_SAVED);
+
+    // Set a timeout of 1 second after the user stops typing
+    typingTimeoutRef.current = setTimeout(async () => {
+      setSavingState(SavingState.SAVING);
+      await updateNote(title, body); // Pass the updated values to the updateNote function
+    }, 3000);
+  };
+
+  const handleTitle = (event: any) => {
+    const { value } = event.target;
+    setUpdatedTitle(value);
+    scheduleSave(value, pendingBodyRef.current || updatedBody);
+    pendingTitleRef.current = value;
+  };
+
+  const handleBody = (value: any) => {
+    setUpdatedBody(value);
+    scheduleSave(pendingTitleRef.current || updatedTitle, value);
+    pendingBodyRef.current = value;
   };
 
   if (!activeNote) {

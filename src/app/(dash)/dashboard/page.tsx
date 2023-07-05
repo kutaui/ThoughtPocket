@@ -1,16 +1,10 @@
 'use client';
 
 import NoteEditor from '@/components/noteEditor/NoteEditor';
-import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import DashSidebar from '@/components/DashSidebar';
-import {
-  useGetNotesMutation,
-  useUpdateNoteMutation,
-  useCreateNoteMutation,
-  useDeleteNoteMutation,
-} from '@/redux/slices/notesApiSlice';
+import { useCreateNoteMutation } from '@/redux/slices/notesApiSlice';
 
 export type Note = {
   _id: string;
@@ -21,31 +15,13 @@ export type Note = {
 };
 
 export default function Dashboard() {
-  const dispatch = useDispatch();
-  const { push } = useRouter();
   const { userInfo } = useSelector((state: any) => state.auth);
-  const [loading, setLoading] = useState(true);
-  const [notes, setNotes] = useState<Note []>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [activeNote, setActiveNote] = useState(null);
-  const [getNotes, { isLoading: isGetNotesLoading, error: getNotesError }] = useGetNotesMutation();
-  const [updateNote, { isLoading: isUpdateNoteLoading, error: updateNoteError }] = useUpdateNoteMutation();
-  const [createNote, { isLoading: isCreateNoteLoading, error: createNoteError }] = useCreateNoteMutation();
-  const [deleteNote, { isLoading: isDeleteNoteLoading, error: deleteNoteError }] = useDeleteNoteMutation();
-  const [isAddingNote, setIsAddingNote] = useState(false);
 
-  useLayoutEffect(() => {
-    if (!userInfo) {
-      push('/auth');
-    } else {
-      let t: NodeJS.Timer;
-      t = setInterval(() => {
-        setLoading(false);
-      }, 1000);
-      return () => {
-        clearInterval(t);
-      };
-    }
-  }, [userInfo, push]);
+  const [createNote] = useCreateNoteMutation();
+
+  const [isAddingNote, setIsAddingNote] = useState(false);
 
   const fetchNotes = async () => {
     try {
@@ -53,7 +29,7 @@ export default function Dashboard() {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes/${userInfo._id}`,
         {
           credentials: 'include',
-        },
+        }
       );
       if (!response.ok) {
         throw new Error('Failed to fetch notes');
@@ -61,7 +37,9 @@ export default function Dashboard() {
       const data = await response.json();
       setNotes(data);
       if (activeNote && data.notes && data.notes.length > 0) {
-        const updatedActiveNote = data.notes.find((note: Note) => note._id === activeNote);
+        const updatedActiveNote = data.notes.find(
+          (note: Note) => note._id === activeNote
+        );
         if (updatedActiveNote) {
           setActiveNote(updatedActiveNote._id);
         }
@@ -103,10 +81,13 @@ export default function Dashboard() {
   const onDeleteNote = async (noteId: string) => {
     const deleteNote = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes/${noteId}`, {
-          credentials: 'include',
-          method: 'DELETE',
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes/${noteId}`,
+          {
+            credentials: 'include',
+            method: 'DELETE',
+          }
+        );
         if (!response.ok) {
           throw new Error('Failed to delete notes');
         }
@@ -118,17 +99,15 @@ export default function Dashboard() {
     await fetchNotes();
   };
   const getActiveNote = () => {
-    if (!notes || !notes.notes) {
+    if (!notes) {
       return null;
     }
-    return notes.notes.find((note: any) => note && note._id === activeNote);
+    return notes.find((note: Note) => note && note._id === activeNote);
   };
 
   useEffect(() => {
     fetchNotes();
   }, []);
-
-  if (loading) return <div className="absolute top-0 left-0 w-[100vw] bg-white z-10 h-[100vh]" />;
 
   return (
     <section className="flex">
@@ -140,7 +119,11 @@ export default function Dashboard() {
         setActiveNote={setActiveNote}
         isAddingNote={isAddingNote}
       />
-      <NoteEditor activeNote={getActiveNote()} fetchNotes={fetchNotes} setActiveNote={setActiveNote} />
+      <NoteEditor
+        activeNote={getActiveNote()}
+        fetchNotes={fetchNotes}
+        setActiveNote={setActiveNote}
+      />
     </section>
   );
 }

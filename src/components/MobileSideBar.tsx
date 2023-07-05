@@ -7,9 +7,10 @@ export default function MobileSideBar({notes, onAddNote, setActiveNote, activeNo
     const hidden = isOpen ? "w-2/3 border-2 border-black " : "w-0"
 
 
-    const handleNoteClick = (noteId:number) => {
+    const handleNoteClick = (noteId:string) => {
         setActiveNote(noteId);
     };
+
     return <>
         <div className="fixed top-3 left-7">
             <Hamburger toggled={isOpen} toggle={setOpen}/>

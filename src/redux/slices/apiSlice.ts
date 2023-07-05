@@ -1,12 +1,14 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
-    credentials: "include",
-})
+  baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
+  credentials: 'include',
+});
 
-export const apiSlice = createApi({
-    baseQuery,
-    tagTypes: ["User", "Note"],
-    endpoints: (builder) => ({}),
-})
+const apiSlice = createApi({
+  baseQuery,
+  tagTypes: ['User', 'Note'],
+  endpoints: (builder) => ({}),
+});
+
+export default apiSlice;

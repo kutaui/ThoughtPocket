@@ -46,62 +46,60 @@ export default function Navbar() {
     }
 
 
-    return <>
+    return <div className={styles["navbar-container"]}>
         <div>
-            <div className={styles["navbar-container"]}>
-                <div>
-                    <Link className={styles["logo-container"]} href="/">
-                        <Image className={styles["logo"]} src={logo} alt="logo" width={50} height={50}/>
-                        <h2 className={styles["logo-title"]}>ThoughtPocket</h2>
-                    </Link>
-                </div>
-                <div className={styles["middle-nav-container"]}>
-                    <ul>
-                        <Link className="hover:underline hover:scale-110" href="/dashboard">
-                            <li>Dashboard</li>
-                        </Link>
-                        <Link className="hover:underline hover:scale-110" href="/faq">
-                            <li>FAQ</li>
-                        </Link>
-                    </ul>
-                </div>
-                <div className={styles["account-container"]}>
-                    <div className="mt-3.5">
-                        <Switch checked={theme === "dark"}
-                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}/>
-                    </div>
-                    {userInfo === null && <Button
-                        className="h-8 mt-3 dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-black"
-                        asChild><Link href="/auth">Login</Link></Button>}
-                    {userInfo && <Button onClick={logoutHandler}
-                                         className="h-8 mt-3 dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-black">Logout</Button>}
-                </div>
-                {/* Mobile Menu */}
-                <div className="lg:hidden md:hidden">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                className="h-8 dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white"
-                                variant="outline">Menu</Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="mr-1 bg-white dark:bg-black">
-                            <DropdownMenuItem
-                                className="hover:underline active:scale-110  active:bg-black active:text-white"><Link
-                                href="/dashboard">Dashboard</Link></DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="hover:underline active:scale-110  active:bg-black active:text-white">FAQ</DropdownMenuItem><DropdownMenuItem
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="hover:underline active:scale-110  active:bg-black active:text-white">Change
-                            theme</DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="hover:underline active:scale-110  active:bg-black active:text-white">
-                                {userInfo ? <span onClick={logoutHandler}>Logout</span> :
-                                    <Link href="/auth">Login</Link>}
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-            </div>
+            <Link className={styles["logo-container"]} href="/">
+                <Image className={styles["logo"]} src={logo} alt="logo" width={50} height={50}/>
+                <h2 className={styles["logo-title"]}>ThoughtPocket</h2>
+            </Link>
         </div>
-    </>
+        <div className={styles["middle-nav-container"]}>
+            <ul>
+                <Link className="hover:underline hover:scale-110" href="/dashboard">
+                    <li>Dashboard</li>
+                </Link>
+                <Link className="hover:underline hover:scale-110" href="/faq">
+                    <li>FAQ</li>
+                </Link>
+            </ul>
+        </div>
+        <div className={styles["account-container"]}>
+            <div className="mt-3.5">
+                <Switch checked={theme === "dark"}
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}/>
+            </div>
+            {userInfo === null && <Button
+                className="h-8 mt-3 dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-black"
+                asChild><Link href="/auth">Login</Link></Button>}
+            {userInfo && <Button onClick={logoutHandler}
+                                 className="h-8 mt-3 dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-black">Logout</Button>}
+        </div>
+        {/* Mobile Menu */}
+        <div className="lg:hidden md:hidden">
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        className="h-8 dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white"
+                        variant="outline">Menu</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="mr-1 bg-white dark:bg-black">
+                    <DropdownMenuItem
+                        className="hover:underline active:scale-110  active:bg-black active:text-white"><Link
+                        href="/dashboard">Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="hover:underline active:scale-110  active:bg-black active:text-white">FAQ</DropdownMenuItem><DropdownMenuItem
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    className="hover:underline active:scale-110  active:bg-black active:text-white">Change
+                    theme</DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="hover:underline active:scale-110  active:bg-black active:text-white">
+                        {userInfo ? <span onClick={logoutHandler}>Logout</span> :
+                            <Link href="/auth">Login</Link>}
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
+    </div>
+
+
 }

@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/noteEditor/Tiptap';
+import BackendURL from '@/utils/BackendURL';
 
 const SavingState = Object.freeze({
   NOT_SAVED: 0,
@@ -41,17 +42,14 @@ export default function NoteEditor({
         body,
       };
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes`,
-        {
-          method: 'PUT',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedNote),
-        }
-      );
+      const response = await fetch(`${BackendURL}/api/notes`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedNote),
+      });
 
       if (!response.ok) {
         throw new Error('Failed to update note');

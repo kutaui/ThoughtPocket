@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import DashSidebar from '@/components/DashSidebar';
 import { useCreateNoteMutation } from '@/redux/slices/notesApiSlice';
+import BackendURL from '@/utils/BackendURL';
 
 export type Note = {
   _id: string;
@@ -16,21 +17,16 @@ export type Note = {
 
 export default function Dashboard() {
   const { userInfo } = useSelector((state: any) => state.auth);
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<{ notes: Note[] }>({ notes: [] });
   const [activeNote, setActiveNote] = useState(null);
-
   const [createNote] = useCreateNoteMutation();
-
   const [isAddingNote, setIsAddingNote] = useState(false);
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes/${userInfo._id}`,
-        {
-          credentials: 'include',
-        }
-      );
+      const response = await fetch(`${BackendURL}/api/notes/${userInfo._id}`, {
+        credentials: 'include',
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch notes');
       }
@@ -67,8 +63,8 @@ export default function Dashboard() {
       const addedNote = response.data;
 
       setNotes((prevNotes) => ({
+        ...prevNotes,
         notes: [...prevNotes.notes, addedNote],
-        length: prevNotes.notes.length + 1,
       }));
 
       await fetchNotes();
@@ -81,13 +77,10 @@ export default function Dashboard() {
   const onDeleteNote = async (noteId: string) => {
     const deleteNote = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notes/${noteId}`,
-          {
-            credentials: 'include',
-            method: 'DELETE',
-          }
-        );
+        const response = await fetch(`${BackendURL}/api/notes/${noteId}`, {
+          credentials: 'include',
+          method: 'DELETE',
+        });
         if (!response.ok) {
           throw new Error('Failed to delete notes');
         }
@@ -98,17 +91,21 @@ export default function Dashboard() {
     await deleteNote();
     await fetchNotes();
   };
+
   const getActiveNote = () => {
-    if (!notes) {
+    if (!notes || !activeNote || !notes.notes || !Array.isArray(notes.notes)) {
       return null;
     }
-    return notes.find((note: Note) => note && note._id === activeNote);
+    return (
+      notes.notes.find((note: Note) => note && note._id === activeNote) || null
+    );
   };
 
   useEffect(() => {
     fetchNotes();
   }, []);
 
+  console.log(notes);
   return (
     <section className="flex">
       <DashSidebar

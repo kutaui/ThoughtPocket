@@ -38,7 +38,7 @@ const formSchema = z.object({
 });
 
 function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
-  const { push } = useRouter();
+  const { push, refresh } = useRouter();
   const dispatch = useDispatch();
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
@@ -60,8 +60,12 @@ function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
         }).unwrap();
         dispatch(setCredentials({ ...res }));
 
-        push('/dashboard');
         toast.success('Register successful');
+        // The delay is for middleware to get the cookie
+        setTimeout(() => {
+          refresh();
+          push('/dashboard');
+        }, 500);
       } catch (err: unknown) {
         toast.error('User already exists');
       }
@@ -73,8 +77,12 @@ function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
         }).unwrap();
         dispatch(setCredentials({ ...res }));
 
-        push('/dashboard');
         toast.success('Logged in successfully');
+        // The delay is for middleware to get the cookie
+        setTimeout(() => {
+          refresh();
+          push('/dashboard');
+        }, 500);
       } catch (err: unknown) {
         toast.error('Invalid credentials');
       }

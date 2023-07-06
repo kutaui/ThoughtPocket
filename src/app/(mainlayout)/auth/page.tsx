@@ -7,7 +7,6 @@ export default function Auth() {
     <Tabs defaultValue="login" className={styles['tabs-container']}>
       <TabsList className={styles['tabs-list']}>
         <TabsTrigger className={styles['tabs-title']} value="login">
-          {' '}
           Login
         </TabsTrigger>
         <TabsTrigger className={styles['tabs-title']} value="register">

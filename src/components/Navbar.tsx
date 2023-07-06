@@ -20,7 +20,7 @@ import { deleteCookie, getCookie } from 'cookies-next';
 export default function Navbar() {
   const [logoutApiCall] = useLogoutMutation();
   const [isMounted, setIsMounted] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
   const logo = theme === 'dark' ? '/logo-dark.png' : '/logo-light.png';
   const userId = getCookie('userId') || '';
@@ -36,12 +36,14 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setUserInfo(typeof userId === 'string' ? userId : null);
+  }, [userId]);
+
+  // I don't remember why I added this, for now everything seems to work
 
   useEffect(() => {
-    setUserInfo(userId);
-  }, [userId]);
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) {
     return null;
@@ -121,7 +123,14 @@ export default function Navbar() {
             </DropdownMenuItem>
             <DropdownMenuItem className="hover:underline active:scale-110  active:bg-black active:text-white">
               {userInfo === '' ? (
-                <span onClick={logoutHandler}>Logout</span>
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={logoutHandler}
+                  onClick={logoutHandler}
+                >
+                  Logout
+                </span>
               ) : (
                 <Link href="/auth">Login</Link>
               )}

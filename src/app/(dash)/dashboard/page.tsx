@@ -1,11 +1,11 @@
 'use client';
 
 import NoteEditor from '@/components/noteEditor/NoteEditor';
-import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import DashSidebar from '@/components/DashSidebar';
 import { useCreateNoteMutation } from '@/redux/slices/notesApiSlice';
 import BackendURL from '@/utils/BackendURL';
+import { getCookie } from 'cookies-next';
 
 export type Note = {
   _id: string;
@@ -16,15 +16,19 @@ export type Note = {
 };
 
 export default function Dashboard() {
-  const { userInfo } = useSelector((state: any) => state.auth);
+  const [userInfo, setUserInfo] = useState<string | null>(null);
+  const userId = getCookie('userId') || '';
   const [notes, setNotes] = useState<{ notes: Note[] }>({ notes: [] });
   const [activeNote, setActiveNote] = useState(null);
   const [createNote] = useCreateNoteMutation();
   const [isAddingNote, setIsAddingNote] = useState(false);
+  useEffect(() => {
+    setUserInfo(userId);
+  }, [userId]);
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch(`${BackendURL}/api/notes/${userInfo._id}`, {
+      const response = await fetch(`${BackendURL}/api/notes/${userInfo}`, {
         credentials: 'include',
       });
       if (!response.ok) {
@@ -56,7 +60,7 @@ export default function Dashboard() {
       const newNote = {
         title: 'Untitled Note',
         body: '',
-        user: userInfo._id,
+        user: userInfo,
       };
 
       const response = await createNote(newNote).unwrap();
@@ -102,10 +106,11 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    if (userInfo) {
+      fetchNotes();
+    }
+  }, [userInfo]);
 
-  console.log(notes);
   return (
     <section className="flex">
       <DashSidebar

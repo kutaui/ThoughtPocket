@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -8,41 +9,41 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLogoutMutation } from '@/redux/slices/usersApiSlice';
-import { logout } from '@/redux/slices/authSlice';
 import { useTheme } from 'next-themes';
-import { RootState } from '@/redux/store';
 import styles from '@/css/navbar.module.css';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { Switch } from '@/components/ui/switch';
 import toast from 'react-hot-toast';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 export default function Navbar() {
-  const { userInfo } = useSelector((state: RootState) => state.auth);
   const [logoutApiCall] = useLogoutMutation();
   const [isMounted, setIsMounted] = useState(false);
-  const dispatch = useDispatch();
+  const [userInfo, setUserInfo] = useState(null);
   const { theme, setTheme } = useTheme();
   const logo = theme === 'dark' ? '/logo-dark.png' : '/logo-light.png';
+  const userId = getCookie('userId') || '';
 
   const logoutHandler = async () => {
     try {
       await logoutApiCall({}).unwrap();
-      dispatch(logout());
+      setUserInfo(null);
+      deleteCookie('userId');
     } catch (error) {
       toast.error('Something went wrong');
     }
   };
 
   useEffect(() => {
-    // Delay the rendering until the component is mounted on the client-side
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    setUserInfo(userId);
+  }, [userId]);
+
   if (!isMounted) {
-    // Return null or a placeholder during server-side rendering
     return null;
   }
 
@@ -77,7 +78,7 @@ export default function Navbar() {
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           />
         </div>
-        {userInfo === null && (
+        {userInfo === '' && (
           <Button
             className="h-8 mt-3 dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-black"
             asChild
@@ -85,7 +86,7 @@ export default function Navbar() {
             <Link href="/auth">Login</Link>
           </Button>
         )}
-        {userInfo && (
+        {userInfo !== '' && (
           <Button
             onClick={logoutHandler}
             className="h-8 mt-3 dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-black"
@@ -119,7 +120,7 @@ export default function Navbar() {
               Change theme
             </DropdownMenuItem>
             <DropdownMenuItem className="hover:underline active:scale-110  active:bg-black active:text-white">
-              {userInfo ? (
+              {userInfo === '' ? (
                 <span onClick={logoutHandler}>Logout</span>
               ) : (
                 <Link href="/auth">Login</Link>

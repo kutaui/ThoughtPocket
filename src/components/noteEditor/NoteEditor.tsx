@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/noteEditor/Tiptap';
 import BackendURL from '@/utils/BackendURL';
+import { Button } from '@/components/ui/button';
 
 const SavingState = Object.freeze({
   NOT_SAVED: 0,
@@ -11,11 +12,9 @@ const SavingState = Object.freeze({
   SAVED: 2,
 });
 
-export default function NoteEditor({
-  activeNote,
-  fetchNotes,
-  setActiveNote,
-}: any) {
+// fix props types, add onclick event for save, fix the automatic save code
+
+export default function NoteEditor({ activeNote, fetchNotes }: any) {
   const [updatedTitle, setUpdatedTitle] = useState(activeNote?.title || '');
   const [updatedBody, setUpdatedBody] = useState(activeNote?.body || '');
   const [savingState, setSavingState] = useState<number>(SavingState.NOT_SAVED);
@@ -70,7 +69,7 @@ export default function NoteEditor({
     typingTimeoutRef.current = setTimeout(async () => {
       setSavingState(SavingState.SAVING);
       await updateNote(title, body); // Pass the updated values to the updateNote function
-    }, 3000);
+    }, 1500);
   };
 
   const handleTitle = (event: any) => {
@@ -109,12 +108,24 @@ export default function NoteEditor({
         onChange={handleBody}
         activeNote={activeNote}
       />
-      {savingState === SavingState.SAVING && (
-        <div className="ml-4 text-2xl">Saving...</div>
-      )}
-      {savingState === SavingState.SAVED && (
-        <div className="ml-4 text-2xl">Note Saved</div>
-      )}
+      <div className="flex justify-around w-[70%] mt-10 md:ml-14 mb-10">
+        <h3 className="ml-4 text-2xl">Autosave is on:</h3>
+        {savingState === SavingState.NOT_SAVED && (
+          <p className="ml-4 text-2xl text-red-700">Not Saved</p>
+        )}
+        {savingState === SavingState.SAVING && (
+          <p className="ml-4 text-2xl text-red-700">Saving...</p>
+        )}
+        {savingState === SavingState.SAVED && (
+          <p className="ml-4 text-2xl text-red-700">Saved</p>
+        )}
+        <Button
+          disabled={savingState === SavingState.SAVING}
+          className="w-20 ml-8 dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white"
+        >
+          Save
+        </Button>
+      </div>
     </div>
   );
 }

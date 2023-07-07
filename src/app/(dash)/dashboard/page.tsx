@@ -16,12 +16,13 @@ export type Note = {
 };
 
 export default function Dashboard() {
-  const [userInfo, setUserInfo] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<string | boolean | null>(null);
   const userId = getCookie('userId') || '';
   const [notes, setNotes] = useState<{ notes: Note[] }>({ notes: [] });
   const [activeNote, setActiveNote] = useState(null);
   const [createNote] = useCreateNoteMutation();
   const [isAddingNote, setIsAddingNote] = useState(false);
+
   useEffect(() => {
     setUserInfo(userId);
   }, [userId]);

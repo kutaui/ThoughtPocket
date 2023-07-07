@@ -10,7 +10,9 @@
     "plugin:import/warnings",
     "plugin:import/typescript",
     "prettier",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
   ],
   "plugins": [
     "prettier",

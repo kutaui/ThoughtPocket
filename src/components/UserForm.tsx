@@ -37,6 +37,8 @@ const formSchema = z.object({
   }),
 });
 
+// props doesnt seem optimal, fix this
+
 function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
   const { push, refresh } = useRouter();
   const dispatch = useDispatch();

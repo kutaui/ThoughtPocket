@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react';
 import Dashboard from '@/app/(dash)/dashboard/page';
+import { renderWithProviders } from '@/utils/testing/MockRedux';
 
 describe('Dashboard', () => {
   describe('Rendering', () => {
     it('should', () => {
-      render(<Dashboard />);
+      renderWithProviders(<Dashboard />);
     });
   });
   // describe('Behaviour', () => {});

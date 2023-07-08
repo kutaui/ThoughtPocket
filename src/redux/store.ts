@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/redux/slices/authSlice';
 import apiSlice from '@/redux/slices/apiSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: authReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
@@ -13,4 +13,3 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export default store;

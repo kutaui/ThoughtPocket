@@ -88,6 +88,7 @@
     "jest-environment-jsdom": "^29.6.1",
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "@testing-library/user-event": "^14.4.3"
   }
 }

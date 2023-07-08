@@ -1,6 +1,6 @@
 import React from 'react';
 import '@/css/globals.css';
-import Providers from '@/redux/provider';
+import Providers from '@/components/Providers';
 import { Toaster } from 'react-hot-toast';
 import { Analytics } from '@vercel/analytics/react';
 

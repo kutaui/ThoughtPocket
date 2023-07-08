@@ -27,7 +27,7 @@ export default function Landing() {
             className="hover:bg-black hover:text-white hover:scale-125 ease-in-out duration-300 transition md:text-xl md:h-12 lg:text-2xl lg:h-14 dark:bg-white dark:hover:bg-black dark:text-black dark:hover:text-white"
             asChild
           >
-            <Link href="/auth" className="">
+            <Link data-testid="mytest" href="/auth" className="">
               Get Started
             </Link>
           </Button>

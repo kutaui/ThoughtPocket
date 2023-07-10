@@ -210,6 +210,7 @@ export default function Tiptap(props: any) {
     ],
     []
   );
+
   const editor = useEditor({
     extensions,
     editorProps: {
@@ -223,15 +224,18 @@ export default function Tiptap(props: any) {
     },
     content: props.value,
   });
+
   useEffect(() => {
     if (editor && props.value !== editor.getHTML()) {
       editor.commands.setContent(props.value);
     }
   }, [editor, props.value]);
 
-  // if I put the dependency of props.value in useEditor, the input loses focus in each keystroke,if I don't, when active note changes the value doesn't.
-  // and If I do this in useEffect, you can't select the text, you can't move through elements, you can only type and delete
-  // If I the dependency of activenote, the body value shows the value of the previous note
+  useEffect(() => {
+    if (editor && props.activeNote) {
+      editor.commands.setContent(props.activeNote.body);
+    }
+  }, [editor, props.activeNote]);
 
   return (
     <div className="w-[95%] min-w-[100px] md:w-[70%] mx-auto ">

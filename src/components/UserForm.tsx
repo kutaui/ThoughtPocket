@@ -21,6 +21,7 @@ import {
   useRegisterMutation,
 } from '@/redux/slices/usersApiSlice';
 import { setCredentials } from '@/redux/slices/authSlice';
+// when testing change this to: next/router
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 

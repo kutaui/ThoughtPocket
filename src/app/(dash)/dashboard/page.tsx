@@ -6,6 +6,7 @@ import DashSidebar from '@/components/DashSidebar';
 import { useCreateNoteMutation } from '@/redux/slices/notesApiSlice';
 import BackendURL from '@/utils/BackendURL';
 import { getCookie } from 'cookies-next';
+import toast from 'react-hot-toast';
 
 export type Note = {
   _id: string;
@@ -74,7 +75,7 @@ export default function Dashboard() {
 
       await fetchNotes();
     } catch (error) {
-      // Handle error
+      toast.error('something went wrong');
     } finally {
       setIsAddingNote(false); // Set isAddingNote to false after the request (whether it succeeds or fails)
     }
@@ -96,7 +97,6 @@ export default function Dashboard() {
     await deleteNote();
     await fetchNotes();
   };
-
   const getActiveNote = () => {
     if (!notes || !activeNote || !notes.notes || !Array.isArray(notes.notes)) {
       return null;
@@ -110,7 +110,9 @@ export default function Dashboard() {
     if (userInfo) {
       fetchNotes();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
+  // deleting the dependency array or adding fetchNotes() to it will cause an infinite loop
 
   return (
     <section className="flex">
@@ -126,6 +128,7 @@ export default function Dashboard() {
         activeNote={getActiveNote()}
         fetchNotes={fetchNotes}
         setActiveNote={setActiveNote}
+        key={activeNote}
       />
     </section>
   );

@@ -19,8 +19,12 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 function renderWithProviders(
   ui: React.ReactElement,
   {
-    preloadedState = {},
+    // for type error, else it was an empty object ()
+    preloadedState = undefined,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     store = configureStore({ reducer: { user: authReducer }, preloadedState }),
+
     router = createMockRouter({}), // Create a mock router by default
     ...renderOptions
   }: ExtendedRenderOptions = {}

@@ -1,4 +1,4 @@
-import { NextRouter } from 'next/navigation';
+import { NextRouter } from 'next/router';
 
 function createMockRouter(router: Partial<NextRouter>) {
   return {

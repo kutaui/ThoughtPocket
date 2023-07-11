@@ -4,6 +4,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React, { useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
+import { Note } from '@/global';
 
 function MenuBar({ editor }: any) {
   if (!editor) {
@@ -194,7 +195,13 @@ function MenuBar({ editor }: any) {
   );
 }
 
-export default function Tiptap(props: any) {
+type TiptapProps = {
+  value: string;
+  onChange: (value: string) => void;
+  activeNote: Note;
+};
+
+export default function Tiptap({ value, onChange, activeNote }: TiptapProps) {
   const extensions = useMemo(
     () => [
       StarterKit.configure({
@@ -220,22 +227,22 @@ export default function Tiptap(props: any) {
       },
     },
     onUpdate: ({ editor }) => {
-      props.onChange(editor.getHTML());
+      onChange(editor.getHTML());
     },
-    content: props.value,
+    content: value,
   });
 
   useEffect(() => {
-    if (editor && props.value !== editor.getHTML()) {
-      editor.commands.setContent(props.value);
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(value);
     }
-  }, [editor, props.value]);
+  }, [editor, value]);
 
   useEffect(() => {
-    if (editor && props.activeNote) {
-      editor.commands.setContent(props.activeNote.body);
+    if (editor && activeNote) {
+      editor.commands.setContent(activeNote.body);
     }
-  }, [editor, props.activeNote]);
+  }, [editor, activeNote]);
 
   return (
     <div className="w-[95%] min-w-[100px] md:w-[70%] mx-auto ">

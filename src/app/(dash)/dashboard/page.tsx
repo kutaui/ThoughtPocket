@@ -7,23 +7,16 @@ import { useCreateNoteMutation } from '@/redux/slices/notesApiSlice';
 import BackendURL from '@/utils/BackendURL';
 import { getCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
-
-export type Note = {
-  _id: string;
-  title: string;
-  body: string;
-  user: string;
-  __v: number;
-};
+import { Note } from '@/global';
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState<string | boolean | null>(null);
   const userId = getCookie('userId') || '';
   const [notes, setNotes] = useState<{ notes: Note[] }>({ notes: [] });
-  const [activeNote, setActiveNote] = useState(null);
+  const [activeNote, setActiveNote] = useState<string | null>(null);
+
   const [createNote] = useCreateNoteMutation();
   const [isAddingNote, setIsAddingNote] = useState(false);
-
   useEffect(() => {
     setUserInfo(userId);
   }, [userId]);
@@ -38,6 +31,7 @@ export default function Dashboard() {
       }
       const data = await response.json();
       setNotes(data);
+
       if (activeNote && data.notes && data.notes.length > 0) {
         const updatedActiveNote = data.notes.find(
           (note: Note) => note._id === activeNote
@@ -47,8 +41,7 @@ export default function Dashboard() {
         }
       }
     } catch (error) {
-      // Handle error
-      console.error(error);
+      toast.error("couldn't fetch notes");
     }
   };
 
@@ -80,6 +73,7 @@ export default function Dashboard() {
       setIsAddingNote(false); // Set isAddingNote to false after the request (whether it succeeds or fails)
     }
   };
+
   const onDeleteNote = async (noteId: string) => {
     const deleteNote = async () => {
       try {
@@ -88,10 +82,10 @@ export default function Dashboard() {
           method: 'DELETE',
         });
         if (!response.ok) {
-          throw new Error('Failed to delete notes');
+          toast.error('Failed to delete notes');
         }
       } catch (error) {
-        // Handle error
+        toast.error('something went wrong');
       }
     };
     await deleteNote();
@@ -117,7 +111,7 @@ export default function Dashboard() {
   return (
     <section className="flex">
       <DashSidebar
-        notes={notes}
+        notes={notes.notes}
         onDeleteNote={onDeleteNote}
         onAddNote={onAddNote}
         activeNote={activeNote}
@@ -127,7 +121,6 @@ export default function Dashboard() {
       <NoteEditor
         activeNote={getActiveNote()}
         fetchNotes={fetchNotes}
-        setActiveNote={setActiveNote}
         key={activeNote}
       />
     </section>

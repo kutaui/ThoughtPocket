@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/noteEditor/Tiptap';
 import BackendURL from '@/utils/BackendURL';
 import { Button } from '@/components/ui/button';
+import { Note } from '@/global';
 
 const SavingState = Object.freeze({
   NOT_SAVED: 0,
@@ -14,13 +15,24 @@ const SavingState = Object.freeze({
 
 // fix props types, add onclick event for save, fix the automatic save code
 
-export default function NoteEditor({ activeNote, fetchNotes }: any) {
+type NoteEditorProps = {
+  activeNote: Note | null;
+  fetchNotes: () => Promise<void>;
+};
+
+export default function NoteEditor({
+  activeNote,
+  fetchNotes,
+}: NoteEditorProps) {
   const [updatedTitle, setUpdatedTitle] = useState(activeNote?.title || '');
   const [updatedBody, setUpdatedBody] = useState(activeNote?.body || '');
   const [savingState, setSavingState] = useState<number>(SavingState.NOT_SAVED);
   const typingTimeoutRef = useRef<NodeJS.Timeout | undefined>();
   const pendingBodyRef = useRef<string | undefined>();
   const pendingTitleRef = useRef<string | undefined>();
+
+  // pendingRef's are used to store the values of the title and body while the user is typing
+  // updatedTitle and updatedBody are used to store the values of the title and body that are displayed in the input fields
 
   useEffect(() => {
     setUpdatedTitle(activeNote?.title || '');
@@ -72,14 +84,14 @@ export default function NoteEditor({ activeNote, fetchNotes }: any) {
     }, 1500);
   };
 
-  const handleTitle = (event: any) => {
+  const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setUpdatedTitle(value);
     scheduleSave(value, pendingBodyRef.current || updatedBody);
     pendingTitleRef.current = value;
   };
 
-  const handleBody = (value: any) => {
+  const handleBody = (value: string) => {
     setUpdatedBody(value);
     scheduleSave(pendingTitleRef.current || updatedTitle, value);
     pendingBodyRef.current = value;

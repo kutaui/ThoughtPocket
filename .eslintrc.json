@@ -34,7 +34,13 @@
     "react/jsx-props-no-spreading": "off",
     "no-underscore-dangle": "off",
     "node/no-unsupported-features/node-builtins": "off",
-    "node/no-unpublished-import": "off"
+    "node/no-unpublished-import": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ]
   },
   "parserOptions": {
     "project": "./tsconfig.json"

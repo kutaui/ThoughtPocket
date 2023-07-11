@@ -1,6 +1,7 @@
 import Hamburger from 'hamburger-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Note, SideBarProps } from '@/global';
 
 export default function MobileSideBar({
   notes,
@@ -8,7 +9,8 @@ export default function MobileSideBar({
   setActiveNote,
   activeNote,
   onDeleteNote,
-}: any) {
+  isAddingNote,
+}: SideBarProps) {
   const [isOpen, setOpen] = useState(false);
   const hidden = isOpen ? 'w-2/3 border-2 border-black ' : 'w-0';
 
@@ -29,6 +31,7 @@ export default function MobileSideBar({
             <h2 className="text-xl dark:text-black font-bold">Notes</h2>
             <Button
               onClick={onAddNote}
+              disabled={isAddingNote}
               className="h-6 dark:bg-black dark:hover:bg-white dark:hover:text-black"
             >
               Add
@@ -36,8 +39,8 @@ export default function MobileSideBar({
           </div>
         )}
         {isOpen &&
-          notes.notes &&
-          notes.notes.map((note) => (
+          notes &&
+          notes.map((note: Note) => (
             <div
               onClick={() => handleNoteClick(note && note._id)}
               onKeyDown={() => handleNoteClick(note && note._id)}

@@ -1,20 +1,30 @@
 import styles from '@/css/dashsidebar.module.css';
 import { Button } from '@/components/ui/button';
 import MobileSideBar from '@/components/MobileSideBar';
+import React from 'react';
+import { Note, SideBarProps } from '@/global';
 
-export default function DashSidebar(props: any) {
+export default function DashSidebar({
+  notes,
+  onAddNote,
+  setActiveNote,
+  activeNote,
+  onDeleteNote,
+  isAddingNote,
+}: SideBarProps) {
   const handleNoteClick = (noteId: string) => {
-    props.setActiveNote(noteId);
+    setActiveNote(noteId);
   };
   return (
     <>
       <aside className="lg:hidden">
         <MobileSideBar
-          notes={props.notes}
-          activeNote={props.activeNote}
-          setActiveNote={props.setActiveNote}
-          onAddNote={props.onAddNote}
-          onDeleteNote={props.onDeleteNote}
+          notes={notes}
+          activeNote={activeNote}
+          setActiveNote={setActiveNote}
+          onAddNote={onAddNote}
+          onDeleteNote={onDeleteNote}
+          isAddingNote={isAddingNote}
         />
       </aside>
       <aside className={styles.sidebar}>
@@ -22,27 +32,30 @@ export default function DashSidebar(props: any) {
           <div className={styles['sidebar-header']}>
             <h2>Notes</h2>
             <Button
-              onClick={props.onAddNote}
-              disabled={props.isAddingNote}
+              onClick={onAddNote}
+              disabled={isAddingNote}
               className="hover:bg-black hover:text-white h-8 mt-3"
             >
               Add
             </Button>
           </div>
           <div className={styles['sidebar-notes']}>
-            {props.notes.notes &&
-              props.notes.notes.map((note: any) => (
+            {notes &&
+              notes.map((note: Note) => (
                 <div
                   key={note && note._id}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={() => handleNoteClick(note._id)}
                   className={`${styles['sidebar-note']} ${
-                    note && note._id === props.activeNote && styles.active
+                    note && note._id === activeNote && styles.active
                   }`}
                   onClick={() => handleNoteClick(note._id)}
                 >
                   <div className={styles['sidebar-note-title']}>
                     <h3>{note && note.title}</h3>
                     <Button
-                      onClick={() => props.onDeleteNote(note && note._id)}
+                      onClick={() => onDeleteNote(note && note._id)}
                       className="hover:bg-red-700 hover:text-white border-red-700 text-red-700 text-xs w-12 h-6"
                     >
                       Delete

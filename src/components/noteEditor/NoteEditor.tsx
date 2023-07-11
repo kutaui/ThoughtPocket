@@ -3,9 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/noteEditor/Tiptap';
-import BackendURL from '@/utils/BackendURL';
 import { Button } from '@/components/ui/button';
 import { Note } from '@/global';
+import { NoteRequests } from '@/utils/axios/axios';
+import toast from 'react-hot-toast';
 
 const SavingState = Object.freeze({
   NOT_SAVED: 0,
@@ -13,7 +14,7 @@ const SavingState = Object.freeze({
   SAVED: 2,
 });
 
-// fix props types, add onclick event for save, fix the automatic save code
+//  add onclick event for save, fix the automatic save code
 
 type NoteEditorProps = {
   activeNote: Note | null;
@@ -34,6 +35,28 @@ export default function NoteEditor({
   // pendingRef's are used to store the values of the title and body while the user is typing
   // updatedTitle and updatedBody are used to store the values of the title and body that are displayed in the input fields
 
+  const handleSave = async () => {
+    const response = await NoteRequests({
+      url: '/api/notes',
+      method: 'PUT',
+      data: {
+        ...activeNote,
+        title: updatedTitle,
+        body: updatedBody,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      toast.error('Failed to update note');
+    } else {
+      setSavingState(SavingState.SAVED);
+      toast.success('Note updated');
+    }
+    await fetchNotes();
+  };
+
   useEffect(() => {
     setUpdatedTitle(activeNote?.title || '');
     setUpdatedBody(activeNote?.body || '');
@@ -46,31 +69,24 @@ export default function NoteEditor({
   }, [activeNote]);
 
   const updateNote = async (title: string, body: string) => {
-    try {
-      const updatedNote = {
+    const response = await NoteRequests({
+      url: '/api/notes',
+      method: 'PUT',
+      data: {
         ...activeNote,
         title,
         body,
-      };
-
-      const response = await fetch(`${BackendURL}/api/notes`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedNote),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update note');
-      }
-
-      setSavingState(SavingState.SAVED);
-      await fetchNotes(); // Fetch the updated notes without resetting the state
-    } catch (error) {
-      // Handle the error
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      toast.error('Failed to update note');
     }
+
+    setSavingState(SavingState.SAVED);
+    await fetchNotes(); // Fetch the updated notes without resetting the state
   };
 
   const scheduleSave = (title: string, body: string) => {
@@ -120,7 +136,7 @@ export default function NoteEditor({
         onChange={handleBody}
         activeNote={activeNote}
       />
-      <div className="flex justify-around w-[70%] mt-10 md:ml-14 mb-10">
+      <div className="flex justify-around w-[70%] mt-10 md:ml-14 xs:ml-10 mb-10">
         <h3 className="ml-4 text-2xl">Autosave is on:</h3>
         {savingState === SavingState.NOT_SAVED && (
           <p className="ml-4 text-2xl text-red-700">Not Saved</p>
@@ -133,6 +149,7 @@ export default function NoteEditor({
         )}
         <Button
           disabled={savingState === SavingState.SAVING}
+          onClick={handleSave}
           className="w-20 ml-8 dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white"
         >
           Save

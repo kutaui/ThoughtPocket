@@ -8,15 +8,16 @@ import BackendURL from '@/utils/BackendURL';
 import { getCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 import { Note } from '@/global';
+import { NoteRequests } from '@/utils/axios/axios';
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState<string | boolean | null>(null);
   const userId = getCookie('userId') || '';
   const [notes, setNotes] = useState<{ notes: Note[] }>({ notes: [] });
   const [activeNote, setActiveNote] = useState<string | null>(null);
-
   const [createNote] = useCreateNoteMutation();
   const [isAddingNote, setIsAddingNote] = useState(false);
+
   useEffect(() => {
     setUserInfo(userId);
   }, [userId]);
@@ -76,21 +77,18 @@ export default function Dashboard() {
 
   const onDeleteNote = async (noteId: string) => {
     const deleteNote = async () => {
-      try {
-        const response = await fetch(`${BackendURL}/api/notes/${noteId}`, {
-          credentials: 'include',
-          method: 'DELETE',
-        });
-        if (!response.ok) {
-          toast.error('Failed to delete notes');
-        }
-      } catch (error) {
-        toast.error('something went wrong');
+      const response = await NoteRequests({
+        url: `/api/notes/${noteId}`,
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        toast.error('Failed to update note');
       }
     };
     await deleteNote();
     await fetchNotes();
   };
+
   const getActiveNote = () => {
     if (!notes || !activeNote || !notes.notes || !Array.isArray(notes.notes)) {
       return null;

@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/noteEditor/Tiptap';
 import { Button } from '@/components/ui/button';
 import { Note } from '@/global';
-import { NoteRequests } from '@/utils/axios/axios';
+import NoteRequests from '@/utils/axios/axios';
 import toast from 'react-hot-toast';
 
 const SavingState = Object.freeze({

@@ -226,6 +226,7 @@ export default function Tiptap({ value, onChange, activeNote }: TiptapProps) {
           'prose dark:prose-invert prose-sm md:prose-base lg:prose-2xl focus:outline-none m-5 w-[95%] h-96 overflow-auto dark:text-white text-black break-word',
       },
     },
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },

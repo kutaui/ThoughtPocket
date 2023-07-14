@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    const { payload, protectedHeader } = await jwtVerify(jwt, secret, {
+    const { payload } = await jwtVerify(jwt, secret, {
       issuer: 'trying',
       audience: 'audience',
     });

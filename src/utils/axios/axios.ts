@@ -1,7 +1,7 @@
 import axios from 'axios';
 import BackendURL from '@/utils/BackendURL';
 
-export async function NoteRequests({ ...args }) {
+async function NoteRequests({ ...args }) {
   try {
     const response = await axios({
       method: args.method,
@@ -21,3 +21,5 @@ export async function NoteRequests({ ...args }) {
     };
   }
 }
+
+export default NoteRequests;

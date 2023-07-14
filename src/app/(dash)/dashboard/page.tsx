@@ -8,7 +8,7 @@ import BackendURL from '@/utils/BackendURL';
 import { getCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 import { Note } from '@/global';
-import { NoteRequests } from '@/utils/axios/axios';
+import NoteRequests from '@/utils/axios/axios';
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState<string | boolean | null>(null);

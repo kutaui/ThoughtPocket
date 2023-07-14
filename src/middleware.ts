@@ -1,3 +1,5 @@
+'use client';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
@@ -7,7 +9,8 @@ export async function middleware(req: NextRequest) {
   const cookie = req.cookies.get('jwt');
   const jwt = cookie?.value as string;
   const response = NextResponse.next();
-
+  console.log('whole cookie', cookie);
+  console.log('jwt value', jwt);
   if (!jwt) {
     if (req.nextUrl.pathname.startsWith('/dashboard')) {
       return NextResponse.redirect(

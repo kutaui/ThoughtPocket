@@ -9,7 +9,9 @@
 ![Landing Page](./public/landing_page.png)
 
 # Introduction
-This is my first _"real"_ fullstack app where I don't use Next.js's api routes. It is fully responsive and functional, but there are still some tweaks that can be made to make it better.
+
+This is my first _"real"_ fullstack app where I don't use Next.js's api routes. It is fully responsive and functional,
+but there are still some tweaks that can be made to make it better.
 
 [Backend](https://github.com/kutaui/ThoughtPocket-Backend)
 
@@ -23,7 +25,6 @@ This is my first _"real"_ fullstack app where I don't use Next.js's api routes. 
 - Typescript & Zod
 - Redux
 
-
 ## Features
 
 - <b>JWT Authentication</b> <br>
@@ -36,11 +37,20 @@ Users can create, read, update and delete notes. The notes are stored in a Mongo
 
 - <b>Autosave notes and title</b><br>
 
-While this was not that hard to implement, it was a bit tricky to get it working with the WYSIWYG editor. Also, there are still some tweaking left to do in order to maximize UX.
+While this was not that hard to implement, it was a bit tricky to get it working with the WYSIWYG editor. Also, there
+are still some tweaking left to do in order to maximize UX.
 
 - <b>Zod for input validation</b> <br>
 
 Currently, I am using Zod only in the frontend. I am planning to use it in the backend as well.
 
+- <b>WYSIWYG editor</b> <br>
 
-### P.S. The backend is hosted on Render, so it might take time for the requests to go through for the first time.
+Used Tiptap rich text editor.
+
+### Development
+
+- Used Airbnb eslint and prettier configs
+- Used Jest and Testing Library for testing
+
+### P.S. The backend is hosted on Render, so TTFB(Time to first byte) might be long.

@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
   if (!jwt) {
     if (req.nextUrl.pathname.startsWith('/dashboard')) {
       return NextResponse.redirect(
-        'https://thought-pocket.kutaybekleric.com/auth'
+        `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth`
       );
     }
     return NextResponse.next();
@@ -27,14 +27,14 @@ export async function middleware(req: NextRequest) {
     if (req.nextUrl.pathname.startsWith('/dashboard') && !cookie) {
       // Redirect to login page if the cookie is missing
       return NextResponse.redirect(
-        'https://thought-pocket.kutaybekleric.com/auth'
+        `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth`
       );
     }
 
     if (req.nextUrl.pathname.startsWith('/auth') && cookie) {
       // Redirect to dashboard if the cookie is present
       return NextResponse.redirect(
-        'https://thought-pocket.kutaybekleric.com/dashboard'
+        `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`
       );
     }
   } catch (error) {

@@ -24,12 +24,16 @@ export async function middleware(req: NextRequest) {
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && !cookie) {
       // Redirect to login page if the cookie is missing
-      return NextResponse.redirect('http://localhost:3000/auth');
+      return NextResponse.redirect(
+        'https://thought-pocket.kutaybekleric.com//auth'
+      );
     }
 
     if (req.nextUrl.pathname.startsWith('/auth') && cookie) {
       // Redirect to dashboard if the cookie is present
-      return NextResponse.redirect('http://localhost:3000/dashboard');
+      return NextResponse.redirect(
+        'https://thought-pocket.kutaybekleric.com//dashboard'
+      );
     }
   } catch (error) {
     return new Response(

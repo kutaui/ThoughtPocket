@@ -1,6 +1,10 @@
+'use client';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import UserForm from '@/components/UserForm';
 import styles from '@/css/auth.module.css';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 
 export default function Auth() {
   return (

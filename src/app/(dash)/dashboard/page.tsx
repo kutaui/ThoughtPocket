@@ -5,10 +5,13 @@ import React, { useEffect, useState } from 'react';
 import DashSidebar from '@/components/DashSidebar';
 import { useCreateNoteMutation } from '@/redux/slices/notesApiSlice';
 import BackendURL from '@/utils/BackendURL';
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 import { Note } from '@/global';
 import NoteRequests from '@/utils/axios/axios';
+import { useRouter } from 'next/navigation';
+import { useLogoutMutation } from '@/redux/slices/usersApiSlice';
+import axios from 'axios';
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState<string | boolean | null>(null);
@@ -17,6 +20,37 @@ export default function Dashboard() {
   const [activeNote, setActiveNote] = useState<string | null>(null);
   const [createNote] = useCreateNoteMutation();
   const [isAddingNote, setIsAddingNote] = useState(false);
+  const [logoutApiCall] = useLogoutMutation();
+  const { push } = useRouter();
+
+  useEffect(() => {
+    axios
+      .get(`${BackendURL}/api/users/verify-token`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      })
+      .then(async (response) => {
+        const responseData = response.data;
+        console.log(responseData);
+        if (!responseData.isValid) {
+          await logoutApiCall({}).unwrap();
+          setUserInfo(null);
+          deleteCookie('userId');
+          push('/auth');
+        }
+      })
+      .catch(async (error) => {
+        if (error.response.status === 500) {
+          await logoutApiCall({}).unwrap();
+          setUserInfo(null);
+          deleteCookie('userId');
+          push('/auth');
+        }
+        console.error(error.response.status);
+      });
+  }, [activeNote]);
 
   useEffect(() => {
     setUserInfo(userId);

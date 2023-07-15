@@ -24,6 +24,7 @@ import { setCredentials } from '@/redux/slices/authSlice';
 // when testing change this to: next/router
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { setCookie } from 'cookies-next';
 
 // this doesnt seem optimal, fix this
 
@@ -62,7 +63,9 @@ function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
           password: values.password,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
-
+        setCookie('userId', res._id, {
+          maxAge: 30 * 24 * 60 * 60,
+        });
         toast.success('Register successful');
         // The delay is for middleware to get the cookie
         setTimeout(() => {
@@ -79,7 +82,9 @@ function UserForm({ buttonText }: { buttonText: ButtonTextType }) {
           password: values.password,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
-
+        setCookie('userId', res._id, {
+          maxAge: 30 * 24 * 60 * 60,
+        });
         toast.success('Logged in successfully');
         // The delay is for middleware to get the cookie
         setTimeout(() => {

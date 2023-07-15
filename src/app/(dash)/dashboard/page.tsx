@@ -33,7 +33,6 @@ export default function Dashboard() {
       })
       .then(async (response) => {
         const responseData = response.data;
-        console.log(responseData);
         if (!responseData.isValid) {
           await logoutApiCall({}).unwrap();
           setUserInfo(null);
@@ -48,7 +47,6 @@ export default function Dashboard() {
           deleteCookie('userId');
           push('/auth');
         }
-        console.error(error.response.status);
       });
   }, [activeNote]);
 

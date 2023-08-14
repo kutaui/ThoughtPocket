@@ -132,9 +132,8 @@ export default function Navbar() {
                   Logout
                 </span>
               )}
-              {userInfo === '' && (
-                <Link href="/auth">Login</Link>
-              )}
+              {userInfo === '' && <Link href="/auth">Login</Link>
+              }
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -19,7 +19,7 @@ import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
-  const { refresh } = useRouter()
+  const { refresh } = useRouter();
   const [logoutApiCall] = useLogoutMutation();
   const [isMounted, setIsMounted] = useState(false);
   const [userInfo, setUserInfo] = useState<string | null>(null);
@@ -32,7 +32,7 @@ export default function Navbar() {
       await logoutApiCall({}).unwrap();
       setUserInfo(null);
       deleteCookie('userId');
-      refresh()
+      refresh();
     } catch (error) {
       toast.error('Something went wrong');
     }

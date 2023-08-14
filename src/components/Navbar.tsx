@@ -122,7 +122,7 @@ export default function Navbar() {
               Change theme
             </DropdownMenuItem>
             <DropdownMenuItem className="hover:underline active:scale-110  active:bg-black active:text-white">
-              {userInfo === '' ? (
+              {userInfo !== '' && (
                 <span
                   role="button"
                   tabIndex={0}
@@ -131,7 +131,8 @@ export default function Navbar() {
                 >
                   Logout
                 </span>
-              ) : (
+              )}
+              {userInfo === '' && (
                 <Link href="/auth">Login</Link>
               )}
             </DropdownMenuItem>

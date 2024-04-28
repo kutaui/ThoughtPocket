@@ -18,11 +18,11 @@ export const metadata = {
   ],
   authors: [
     {
-      name: 'Kutaui',
-      url: 'https://www.kutaybekleric.com/',
+      name: 'kutaui',
+      url: 'https://kutay.boo',
     },
   ],
-  creator: 'Kutaui',
+  creator: 'kutaui',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' },

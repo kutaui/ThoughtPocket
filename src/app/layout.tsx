@@ -17,11 +17,15 @@ export const metadata = {
     'Next.js',
   ],
   authors: [
-    {
-      name: 'kutaui',
-      url: 'https://kutay.boo',
-    },
-  ],
+		{
+			name: 'kutaui',
+			url: 'https://kutay.boo',
+		},
+		{
+			name: 'kutay bekleric',
+			url: 'https://kutaybekleric.com',
+		},
+	],
   creator: 'kutaui',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
